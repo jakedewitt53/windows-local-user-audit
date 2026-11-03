@@ -7,6 +7,10 @@ Write-Host "========================================"
 Write-Host ""
 
 $LocalUsers = Get-LocalUser
+$EnableUsers = $LocalUsers | Where-Object { $_.Enabled -eq $true }
+$LocalAdmins = Get-LocalGroupMember -Group "Administrators"
+$EnabledUserCount = $LocalAdmins.Count
+$AdminCount = $LocalAdmins.Count
 
 Write-Host "Local Users"
 Write-Host "----------------------------------------"
@@ -36,4 +40,18 @@ foreach ($Admin in $LocalAdmins) {
     Write-Host "Name: $($Admin.Name)"
     Write-Host "Object Class: $($Admin.ObjectClass)"
     Write-Host ""
+}
+
+Write-Host ""
+Write-Host "Audit Summary"
+Write-Host "----------------------------------------"
+
+Write-Host "Enabled Local Accounts: $EnabledUserCount"
+Write-Host "Local Administrator Entries: $AdminCount"
+
+if($AdminCount -gt 3) {
+    Write-Host "Audit Status: REVIEW - Multiple local administrator entries detected."
+}
+else {
+    Write-Host "Audit Status: OK - Administrator count is within expected range."
 }
