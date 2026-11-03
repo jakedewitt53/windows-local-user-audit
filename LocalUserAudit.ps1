@@ -11,6 +11,13 @@ $EnableUsers = $LocalUsers | Where-Object { $_.Enabled -eq $true }
 $LocalAdmins = Get-LocalGroupMember -Group "Administrators"
 $EnabledUserCount = $LocalAdmins.Count
 $AdminCount = $LocalAdmins.Count
+$UserAuditResults = foreach ($User in $LocalUsers) {
+    [PSCustomObject]@{
+        Name        = $User.Name
+        Enabled     = $User.Enabled
+        Description = $User.Description
+    }
+}
 
 Write-Host "Local Users"
 Write-Host "----------------------------------------"
@@ -55,3 +62,8 @@ if($AdminCount -gt 3) {
 else {
     Write-Host "Audit Status: OK - Administrator count is within expected range."
 }
+
+$UserAuditResults | Export-Csv -Path ".\LocalUserAudit.csv" -NoTypeInformation
+
+Write-Host ""
+Write-Host "CSV Export: LocalUserAudit.csv created successfully."

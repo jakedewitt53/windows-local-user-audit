@@ -1,0 +1,8 @@
+"Name","Enabled","Description"
+"Administrator","False","Built-in account for administering the computer/domain"
+"CodexSandboxOffline","True",""
+"CodexSandboxOnline","True",""
+"DefaultAccount","False","A user account managed by the system."
+"Guest","False","Built-in account for guest access to the computer/domain"
+"jaked","True",""
+"WDAGUtilityAccount","False","A user account managed and used by the system for Windows Defender Application Guard scenarios."
